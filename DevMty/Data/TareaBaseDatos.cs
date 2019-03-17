@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using SQLite;
+using DevMty.Data;
 
 namespace DevMty
 {
@@ -9,6 +10,8 @@ namespace DevMty
     public class TareaBaseDatos
     {
         readonly SQLiteAsyncConnection database;
+
+
         // Inicializa la base de datos.
         public TareaBaseDatos(string dbPath)
         {
@@ -35,16 +38,19 @@ namespace DevMty
         {
             if (item.ID != 0)
             {
+              
                 return database.UpdateAsync(item);
             }
             else
             {
+          
                 return database.InsertAsync(item);
             }
         }
         // Regresa la base de datos sin el item que fue borrado.
         public Task<int> DeleteItemAsync(Models.Tarea item)
         {
+ 
             return database.DeleteAsync(item);
         }
 

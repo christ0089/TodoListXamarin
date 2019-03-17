@@ -4,6 +4,7 @@ using System.IO;
 using System.Diagnostics;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using DevMty.Data;
 
 [assembly: XamlCompilation(XamlCompilationOptions.Compile)]
 namespace DevMty
@@ -12,6 +13,8 @@ namespace DevMty
     {
 
         static TareaBaseDatos database;
+        public static TodoItemManager TodoManager { get; private set; }
+
         public App()
         {
             InitializeComponent();
@@ -20,6 +23,7 @@ namespace DevMty
             Resources.Add("primaryDarkGreen", Color.FromHex("6FA22E"));
 
             var nav = new NavigationPage(new TareaListPage());
+            TodoManager = new TodoItemManager(new TareaREST());
             nav.BarBackgroundColor = (Color)App.Current.Resources["primaryGreen"];
             nav.BarTextColor = Color.White;
 

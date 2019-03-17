@@ -7,6 +7,7 @@ namespace DevMty
 {
     public partial class TareaListPage : ContentPage
     {
+        private bool alertShown = false;
         public TareaListPage()
         {
             InitializeComponent();
@@ -18,7 +19,22 @@ namespace DevMty
 
             ((App)App.Current).ResumeAtTodoId = -1;
             listView.ItemsSource = await App.Database.GetItemsNotDoneAsync();
+
+            // Checar coneccion con el Backend
+            if (Constants.RestUrl.Contains("localhost"))
+            {
+                if (!alertShown)
+                {
+                    await DisplayAlert(
+                        "Hosted Back-End",
+                        "App is Connected",
+                        "OK");
+                    alertShown = true;
+                }
+            }
+
         }
+
         // Actualiza lista cuando se agrega una tarea
         async void OnItemAdded(object sender, EventArgs e)
         {
@@ -35,6 +51,7 @@ namespace DevMty
                 data.Done = true;
                 await App.Database.SaveItemAsync(data);
                 listView.ItemsSource = await App.Database.GetItemsNotDoneAsync();
+                await App.Database.SaveItemAsync(data);
         }
 
 

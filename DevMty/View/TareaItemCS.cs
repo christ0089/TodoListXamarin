@@ -50,6 +50,7 @@ namespace DevMty
                 todoItem.StartDate = dateStart.Date;
                 todoItem.EndDate = dateEnd.Date;
                 await App.Database.SaveItemAsync(todoItem);
+                await App.TodoManager.SaveTaskAsync(todoItem);
                 await Navigation.PopAsync();
             };
             // Initialize Delelete Button as well as event handlers
@@ -57,8 +58,8 @@ namespace DevMty
             deleteButton.Clicked += async (sender, e) =>
             {
                 var todoItem = (Models.Tarea)BindingContext;
-
                 await App.Database.DeleteItemAsync(todoItem);
+                await App.TodoManager.DeleteTaskAsync(todoItem);
                 await Navigation.PopAsync();
             };
             // Initialize Cancel Button as well as event handlers
